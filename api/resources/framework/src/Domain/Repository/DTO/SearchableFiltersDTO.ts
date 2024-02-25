@@ -1,4 +1,4 @@
-export class SearchableFiltersDto {
+export class SearchableFiltersDTO {
   constructor(protected query?: string) {}
 
   public setQuery(query: string): this {

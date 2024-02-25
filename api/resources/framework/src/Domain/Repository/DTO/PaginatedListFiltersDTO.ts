@@ -1,6 +1,6 @@
-import { SearchableFiltersDto } from './SearchableFiltersDto'
+import { SearchableFiltersDTO } from './SearchableFiltersDTO'
 
-export class PaginatedListFiltersDto extends SearchableFiltersDto {
+export class PaginatedListFiltersDTO extends SearchableFiltersDTO {
   protected page: number
   protected size: number
 

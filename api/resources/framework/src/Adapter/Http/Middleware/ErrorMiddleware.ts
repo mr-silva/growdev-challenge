@@ -5,7 +5,6 @@ import {
   BaseException,
   DataNotFoundException,
   InvalidDataException,
-  InvalidUserAuthenticationDataException,
   NotAllowedException
 } from '../../../Domain'
 import { ResponseEntity } from '../Entity'
@@ -47,9 +46,7 @@ export class ErrorMiddleware {
         return detail
       })
 
-      if (error instanceof InvalidUserAuthenticationDataException)
-        httpCode = HttpStatusEnum.UNAUTHORIZED
-      else if (error instanceof NotAllowedException) httpCode = HttpStatusEnum.FORBIDDEN
+      if (error instanceof NotAllowedException) httpCode = HttpStatusEnum.FORBIDDEN
       else if (error instanceof DataNotFoundException) httpCode = HttpStatusEnum.NOT_FOUND
       else if (error instanceof AlreadyExistsException) httpCode = HttpStatusEnum.CONFLICT
       else if (error instanceof InvalidDataException) httpCode = HttpStatusEnum.UNPROCESSABLE_ENTITY
@@ -64,6 +61,6 @@ export class ErrorMiddleware {
 
     if (httpCode === HttpStatusEnum.INTERNAL_SERVER_ERROR) console.error(error)
 
-    return new ResponseEntity(response, body, httpCode).build()
+    return new ResponseEntity(response, { status: httpCode, data: body }, httpCode).build()
   }
 }

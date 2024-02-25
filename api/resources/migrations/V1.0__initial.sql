@@ -5,10 +5,11 @@ CREATE TABLE IF NOT EXISTS `user` (
   `id` CHAR(36) NOT NULL,
   `name` VARCHAR(100) NOT NULL,
   `document_number` CHAR(11) NOT NULL,
+  `email` VARCHAR(200) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `uq_user_document_number` (`document_number` ASC) VISIBLE);
+  UNIQUE INDEX `uq_user_document_number_email` (`document_number` ASC, `email` ASC) VISIBLE);
 
 
 -- -----------------------------------------------------

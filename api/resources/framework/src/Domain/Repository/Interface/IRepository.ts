@@ -1,9 +1,9 @@
 import { PaginatedList } from '../../Entity'
-import { PaginatedListFiltersDto, SearchableFiltersDto } from '../Dto'
+import { PaginatedListFiltersDTO, SearchableFiltersDTO } from '../DTO'
 
 export interface IRepository<
   TDomainEntity,
-  TSearchableFilters extends SearchableFiltersDto = SearchableFiltersDto
+  TSearchableFilters extends SearchableFiltersDTO = SearchableFiltersDTO
 > {
   /**
    * Retorna uma lista paginada de registros com total e items.
@@ -11,13 +11,13 @@ export interface IRepository<
    * @template TDomainEntity
    *
    * @param {TSearchableFilters} filters
-   * @param {PaginatedListFiltersDto} paginationFilters
+   * @param {PaginatedListFiltersDTO} paginationFilters
    *
    * @returns {Promise<PaginatedList<TDomainEntity>>}
    */
   getPaginatedList(
     filters: TSearchableFilters,
-    paginationFilters: PaginatedListFiltersDto
+    paginationFilters: PaginatedListFiltersDTO
   ): Promise<PaginatedList<TDomainEntity>>
 
   /**
@@ -40,7 +40,7 @@ export interface IRepository<
    *
    * @returns {Promise<TDomainEntity>}
    */
-  getOneById(id: string): Promise<TDomainEntity>
+  getOneById(id: string): Promise<TDomainEntity | null>
 
   /**
    * Exclui um único registro filtrando pelo id.

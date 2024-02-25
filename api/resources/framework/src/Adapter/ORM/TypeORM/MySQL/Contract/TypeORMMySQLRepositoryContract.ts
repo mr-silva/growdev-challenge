@@ -3,16 +3,16 @@ import { SelectQueryBuilder } from 'typeorm/query-builder/SelectQueryBuilder'
 import { IEntityDataMapper } from '../../../../../DataMapper'
 import {
   DataNotFoundException,
-  PaginatedListFiltersDto,
+  PaginatedListFiltersDTO,
   IRepository,
   PaginatedList,
-  SearchableFiltersDto
+  SearchableFiltersDTO
 } from '../../../../../Domain'
 
 export abstract class TypeORMMySQLRepositoryContract<
   TDomainEntity,
   TDaoEntity extends ObjectLiteral,
-  TSearchableFilters extends SearchableFiltersDto = SearchableFiltersDto
+  TSearchableFilters extends SearchableFiltersDTO = SearchableFiltersDTO
 > implements IRepository<TDomainEntity, TSearchableFilters>
 {
   /**
@@ -36,13 +36,10 @@ export abstract class TypeORMMySQLRepositoryContract<
 
   public constructor(
     repository: TypeOrmRepository<TDaoEntity>,
-    dataMapper: IEntityDataMapper<TDomainEntity, TDaoEntity>,
-    protected dataNotFoundException?: DataNotFoundException
+    dataMapper: IEntityDataMapper<TDomainEntity, TDaoEntity>
   ) {
     this.repository = repository
     this.dataMapper = dataMapper
-
-    if (!dataNotFoundException) this.dataNotFoundException = new DataNotFoundException()
   }
 
   /**
@@ -50,7 +47,7 @@ export abstract class TypeORMMySQLRepositoryContract<
    */
   public async getPaginatedList(
     filters: TSearchableFilters,
-    paginationFilters: PaginatedListFiltersDto
+    paginationFilters: PaginatedListFiltersDTO
   ): Promise<PaginatedList<TDomainEntity>> {
     const query = this.applyPaginator(
       paginationFilters,
@@ -81,14 +78,14 @@ export abstract class TypeORMMySQLRepositoryContract<
   /**
    * @inheritDoc
    */
-  public async getOneById(id: string): Promise<TDomainEntity> {
+  public async getOneById(id: string): Promise<TDomainEntity | null> {
     const query = this.customToGetOneById(
       this.repository.createQueryBuilder().andWhere(`${this.getTableName()}.id = :id`, { id })
     )
 
     const entity = await query.getOne()
 
-    if (!entity) throw this.dataNotFoundException
+    if (!entity) return null
 
     return this.dataMapper.toDomain(entity)
   }
@@ -135,13 +132,13 @@ export abstract class TypeORMMySQLRepositoryContract<
    *
    * @template TDaoEntity
    *
-   * @param {PaginatedListFiltersDto} filters
+   * @param {PaginatedListFiltersDTO} filters
    * @param {SelectQueryBuilder<TDaoEntity>} query
    *
    * @returns {SelectQueryBuilder<TDaoEntity>}
    */
   public applyPaginator(
-    filters: PaginatedListFiltersDto,
+    filters: PaginatedListFiltersDTO,
     query: SelectQueryBuilder<TDaoEntity>
   ): SelectQueryBuilder<TDaoEntity> {
     const skip = (filters.getPage() - 1) * filters.getSize()
@@ -194,7 +191,7 @@ export abstract class TypeORMMySQLRepositoryContract<
    */
   protected applySearch(
     query: SelectQueryBuilder<TDaoEntity>,
-    filters: SearchableFiltersDto
+    filters: SearchableFiltersDTO
   ): SelectQueryBuilder<TDaoEntity> {
     if (!filters?.getQuery() || !this.getFieldsToSearch().length) return query
 

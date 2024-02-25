@@ -1,2 +1,2 @@
-export * from './PaginatedListFiltersDto'
-export * from './SearchableFiltersDto'
+export * from './PaginatedListFiltersDTO'
+export * from './SearchableFiltersDTO'

@@ -14,7 +14,6 @@
     "noImplicitAny": true,
     "skipLibCheck": true,
     "typeRoots": [
-      "./resources/framework/src/@types",
       "./node_modules/@types"
     ]
   },

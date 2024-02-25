@@ -8,7 +8,7 @@ services:
     working_dir: /app
     env_file:
       - '.env'
-    command: yarn start
+    command: yarn dev:api
     depends_on:
       - mysql
 
@@ -21,7 +21,7 @@ services:
 
   flyway:
     image: flyway/flyway
-    command: -url=jdbc:mysql://mysql -schemas=growdev-challenge -user=root -connectRetries=60 migrate
+    command: -url=jdbc:mysql://mysql -schemas="$MYSQL_DATABASE" -user=root -connectRetries=60 migrate
     volumes:
       - ./resources/migrations:/flyway/sql
     depends_on:
