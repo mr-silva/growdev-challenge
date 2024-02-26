@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+import Toolbar from './Toolbar.vue'
 import DataTable from './DataTable.vue'
 
 </script>
