@@ -6,7 +6,7 @@ import { StudentPresenter } from '../../Presenter'
 export class StudentController {
   public async create(request: Request, response: Response, next: NextFunction) {
     try {
-      // await new StudentValidator().validateCreateSchema(request.body)
+      await new StudentValidator().validateCreateSchema(request.body)
 
       const result = await Factory.getInstance()
         .buildUseCaseFactory()
