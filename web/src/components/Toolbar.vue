@@ -61,7 +61,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
-import { IStudentPost, postStudent } from '../api/postStudent'
+import { postStudent } from '../api/postStudent'
 
 const isDialogOpen = ref(false)
 
